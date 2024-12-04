@@ -5,6 +5,8 @@ import Calc1 from './comp/calc/study01';
 
 import Inp1 from './comp/inp/input01';
 import Oup1 from './comp/inp/output01';
+import Join from './comp/join/join';
+import Page from './comp/join/mypage';
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
       <Route path={"/cal1"} element={<Calc1 />}/>
       <Route path={"/inp1"} element={<Inp1 />}/>
       <Route path={"/oup1"} element={<Oup1 />}/>
+      <Route path={"/join"} element={<Join />}/>
+      <Route path={"/mypage"} element={<Page />}/>
       </Routes>
       </BrowserRouter>
     </div>
@@ -32,6 +36,11 @@ function Home(){
       <h4>데이터 옮기기</h4>
       <Link to="/inp1">데이터 입력</Link><br/>
       <Link to="/oup1">데이터 출력</Link>
+
+      <h4>회원가입</h4>
+      <Link to="/join">회원가입</Link><br/>
+      <Link to="/mypage">마이페이지</Link><br/>
+
     </div>
   )
 }
