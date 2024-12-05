@@ -7,9 +7,9 @@ import Inp1 from './comp/inp/input01'
 import Oup1 from './comp/inp/output01'
 import Ref from './comp/inp/Ref01'
 
-import ProJoin from './comp/join/join'
-import Login from './comp/join/login'
-import MyPage from './comp/join/mypage'
+import ProJoin from './comp/pro/join'
+import ProLogin from './comp/pro/login'
+import MyPage from './comp/pro/mypage'
 
 import Ax1 from './comp/ax/ax01'
 
@@ -30,7 +30,7 @@ function App() {
           <Route path={"/pro1"} element={<ProJoin />} />
 
           <Route path={"/ax1"} element={<Ax1 />} />
-          <Route path={"/login"} element={<Login />} />
+          <Route path={"/login"} element={<ProLogin />} />
           <Route path={"/mypage"} element={<MyPage />} />
         </Routes>
       </BrowserRouter>

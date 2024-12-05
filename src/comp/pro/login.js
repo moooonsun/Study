@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { memberlogin, memberList } from '../api/member'
 import { useNavigate } from 'react-router-dom';
 
-export default function Join() {
+export default function Login() {
     const [아이디, 변경아이디] = useState('');
     const [비밀번호, 변경비밀번호] = useState('');
     const [areas, setAreas] = useState([]);
@@ -27,6 +27,7 @@ export default function Join() {
 
     return (
         <div>
+            <h1>로그인</h1>
             <input type='text' placeholder='아이디 입력' value={아이디} onChange={
                 e => 변경아이디(e.target.value)
             } />
@@ -58,6 +59,11 @@ export default function Join() {
                     });
                 }
             } />
+            <input type='button' value='회원가입' onClick={
+                () => {
+                    navigate('/pro1');
+                }
+            }/>
             
         </div>
     );

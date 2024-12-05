@@ -50,7 +50,7 @@ export default function Join() {
     .then(res =>{
       console.log('성공');
       console.log(res)
-      setIdk(아이디);
+
     
     })
     .catch(err =>{
@@ -73,6 +73,7 @@ export default function Join() {
           check.then(res => {
             console.log('성공');
             console.log(res);
+            setIdk(아이디);
             idRef.current.disabled = true;
           })
 
