@@ -7,7 +7,14 @@ import api from '../ax/axiosSetting'
  */
 export const itemList = (param) =>{
     return api.get('/item/all',{
-        params: param
+        params: param,
+
+    });
+}
+export const itemList2 = (obj) =>{
+    return api.get('/item/all',{
+    
+        params:obj
     });
 }
 /**

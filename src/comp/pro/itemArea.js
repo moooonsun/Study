@@ -1,16 +1,18 @@
 //아이템 리스트 영역
 export default function AreaItem(props) {
 
+    
     const item = props.item;
     const index = props.index;
-
+    const key = props.key;
+    const categoryIdx = props.categoryIdx;
     function goodUp(index) {
         console.log(index);
         props.onGoodUp(index);
     }
 
     return  (
-        <div key={index} style={
+        <div key={key} style={
             {
                 'border': '2px solid blue',
                 'width': '400px',

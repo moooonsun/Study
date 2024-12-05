@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 import { itemList } from '../api/item';
+import { itemList2 } from '../api/item';
 import ItemArea from './itemArea'
 import {itemGood} from '../api/item';
 
 export default function Study() {
 
-    const [ items, setItems] = useState([]);
+    const [items, setItems] = useState([]);
     const [categoryId, setCategoryId] = useState(0);
     const [keyword, setKeyword] = useState('');
 
@@ -33,21 +34,23 @@ export default function Study() {
     useEffect(() => {
         startItemList();
     }, [])
-
+    
     //useState가 변화를 감지할 경우, 해당 event가 동작 되도록 정의
     //이 부분 사용 할 때, [무한루프] 조심 하세요.
     useEffect(() => {
         seachBtn();
-    }, [keyword]);
+    }, [keyword, categoryId]);
 
     function categoryNum(num) {
-        console.log('num: ', num);
+
+        setCategoryId(num)
     }
 
     /** 검색 버튼 */
     function seachBtn() {
         let param = new Object();
         param.keyword = keyword;
+        param.categoryIdx = categoryId;
         console.log(param);
 
         startItemList(param); // 아이템 검색
@@ -77,6 +80,7 @@ export default function Study() {
                         <a onClick={
                             e=> {
                                 e.preventDefault();     //html 기본기능 멈추게 하기
+                                
                                 categoryNum(item.id);
                             }
                         }>{item.name}</a>
@@ -95,9 +99,9 @@ export default function Study() {
             {/** 아이템 리스트 */}
             {items.map(
                 (item, index) => (
-                    <ItemArea item={item} index={index} onGoodUp={
+                    <ItemArea key={index} item={item} index={index}  onGoodUp={
                         (idx) => {
-                            const copy = items.copy;
+                    
                             console.log('부모: ', idx);
                             changeItem(idx);
                         }
