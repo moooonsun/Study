@@ -44,12 +44,14 @@ export default function Login() {
                     const check = memberlogin(obj);
 
                     check.then(res => {
-                        if(res.data.data === 'Y'){
+                        if(res.data.data === 'Y' && res.data.code == '200'){
                             console.log('성공');
                             navigate('/mypage');
-                        }else if(res.data.data === 'N'){
+                        }else{
+                            변경아이디('');
+                            변경비밀번호('');
+                            
                             console.log('실패');
-                            navigate('/login');
                         }
                    
                     })
