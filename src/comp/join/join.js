@@ -1,101 +1,98 @@
 
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect,  useState } from 'react';
+import { areaList, memberIdCheck } from '../api/member'
 
 export default function Join() {
-  const [id, setId] = useState('');
-  const [pw, setPw] = useState('');
-  const [gender, setGender] = useState('');
-  const [hobby, setHobby] = useState([]);
-  const year = new Date().getFullYear();
-  const [birth, setBirth] = useState(year);
-  const navigate = useNavigate('');
-  const years = Array.from({ length: 101 }, (_, i) => year - i);
-  const handleChange = (e) => {
-    setBirth(e.target.value);
-  };
-  function handleHobby(e) {
-    
-    //이미 체크가 되어있을 경우
-    if(hobby.includes(e.target.value)) {
-      //2. 1번에서 제외된 리스트를 다시 hobby에 저장.
-      setHobby(
-        //1. 체크된 결과값과 똑같은 값은 제외 처리
-        hobby.filter(item => item !== e.target.value)
-      )
-    }
-    //체크가 안 되어 있을 경우
-    else {
-      //마지막에 입력된 값을 추가 한다.
-      setHobby([...hobby, e.target.value]);
-    }
+  const [아이디, 변경아이디] = useState(''); // 아이디 입력
+  const [password, setPassowrd] = useState('')//비밀번호 입력
+  const [name, setName] = useState('')//이름 입력
+  const [email, setEamil] = useState('');//이메일 입력
+  const [gender, setGender] = useState('M');//성별 체크
+  const [birth, setBirth] = useState('');//생일 입력
+  const [areas, setAreas] = useState([]);//지역 리스트
+  const [area, setArea] =useState(0); //지역 번호
+  useEffect(() => {
+    startList();
+  }, []); //page가 처음으로 불러오는 현상 (마운트) 이때만 동작 되게 해달라
+  //useMemo(startList(), [startList]);
+  //랜더링이 더이상 ( 개발자가 생각한 외에 발생 ) 
+  function startList() {
+    console.log('ㅎㅇㅎㅇ ');
+    areaList()
+      .then(res => {
+        console.log(res);
+        setAreas(res.data.data);// select 지역리스트 추가
+        setArea(res.data.data[0].idx); //지역코드 기본값 (첫번째 idx)
+      })
   }
+  /**
+   * 회원가입 시 동작 되도록!
+   */
+  function JoinAction(){
+    //유효성검사
+    const obj ={
+      'userId': 아이디,
+      'userPw': password,
+      'userName':name,
+      'eamil': email,
+      'brith': birth,
+      'gender': gender,
+      'areaIdx':area
+    }
+    console.log(obj);
+  }
+  console.log(areas);
   return (
-    <div className="App">
-      <h1>회원가입</h1>
-      <input type='text' placeholder='아이디 입력' value={id} onChange={e => {
-        setId(e.target.value)
-      }} /><br />
-      <input type='text' placeholder='비밀번호 입력' value={pw} onChange={e => {
-        setPw(e.target.value)
-      }} /><br />
-      남자<input type='radio' name='gender' value='남자' onChange={e => {
-        setGender(e.target.value);
-      }} />
-      여자<input type='radio' name='gender' value='여자' onChange={e => {
-        setGender(e.target.value);
-      }} /><br />
-      운동<input type='checkbox' value='운동' onChange={e => {
-        handleHobby(e)
-      }} />
-      게임<input type='checkbox' value='게임' onChange={e => {
-        handleHobby(e)
-      }} />
-      영화<input type='checkbox' value='영화' onChange={e => {
-        handleHobby(e)
-      }} /><br/>
-      
-      <select value={birth} onChange={handleChange}>
-        {years.map((y) => (
-          <option key={y} value={y}>
-            {y}
+    <div>
+      <input type='text' placeholder='아이디 입력' value={아이디} onChange={
+        e => 변경아이디(e.target.value)
+      } />
+      <input type='button' value='중복 체크' onClick={
+        () => {
+          let obj = new Object();
+          obj.id = 아이디;
+
+          const check = memberIdCheck(obj);
+
+          check.then(res => {
+            console.log('성공');
+            console.log(res);
+          })
+
+          check.catch(err => {
+            console.log(err);
+          });
+        }
+      } /><br />
+      <input type="password" placeholder="비밀번호 입력" value={password} onChange={
+        e => setPassowrd(e.target.value)
+      } /><br />
+      <input type="text" placeholder="이름 입력" value={name} onChange={
+        e => setName(e.target.value)
+      } /><br />
+      <input type="email" placeholder="이메일 입력" value={email} onChange={
+        e => setEamil(e.target.value)
+      } /><br />
+      <input type="radio" name='gender' value='M' checked onChange={
+        e => setGender(e.target.value)
+      } />남자<br />
+      <input type="radio" name='gender' value='F' onChange={
+        e => setGender(e.target.value)
+      } />여자<br />
+      <input type='date' value={birth} onChange={
+        e => setBirth(e.target.value)
+      } /><br />
+      지역코드
+      <select onChange={
+        e=>setArea(e.target.value)
+      }>
+        {areas.map((item, index) => (
+          <option key={index} value={item.idx}>
+            {item.areaName}
           </option>
         ))}
       </select>
-
-      <br/>
-      <input
-        type="button"
-        value="회원 가입"
-        onClick={
-          () => {
-            const data ={
-                id: id,
-                pw: pw,
-                gender: gender,
-                hobby: hobby,
-                birth: birth
-            }
-            localStorage.setItem('user', JSON.stringify(data)); // JSON으로 저장
-            navigate('/mypage');
-            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-            const radios = document.querySelectorAll('input[type="radio"]')
-            console.log(`id: ${id}`);
-            console.log(`pw: ${pw}`);
-            console.log(`gender: ${gender}`);
-            console.log(`hobby: ${hobby}`);
-            console.log(`birth: ${birth}`);
-            checkboxes.forEach((checkbox) => (checkbox.checked = false));
-            radios.forEach((radio) => (radio.checked = false));
-            setId('');
-            setPw('');
-            setGender(''); 
-            setHobby([]); 
-            setBirth(year);
-
-          }
-        }
-      ></input>
+      <input type='button' value="회원가입" onClick={JoinAction} />
     </div>
   );
 }
