@@ -1,6 +1,6 @@
 
 import { useEffect,  useState } from 'react';
-import { areaList, memberIdCheck } from '../api/member'
+import { areaList, memberIdCheck, memberRegist } from '../api/member'
 
 export default function Join() {
   const [아이디, 변경아이디] = useState(''); // 아이디 입력
@@ -34,12 +34,19 @@ export default function Join() {
       'userId': 아이디,
       'userPw': password,
       'userName':name,
-      'eamil': email,
-      'brith': birth,
+      'email': email,
+      'birth': birth,
       'gender': gender,
       'areaIdx':area
     }
     console.log(obj);
+    memberRegist(obj)
+    .then(res =>{
+      console.log(res)
+    })
+    .catch(err =>{
+      console.log(err);
+    })
   }
   console.log(areas);
   return (
