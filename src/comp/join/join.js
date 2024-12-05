@@ -1,5 +1,5 @@
 
-import { useEffect,  useState } from 'react';
+import { useEffect,  useState, useRef } from 'react';
 import { areaList, memberIdCheck, memberRegist } from '../api/member'
 
 export default function Join() {
@@ -10,6 +10,8 @@ export default function Join() {
   const [gender, setGender] = useState('M');//성별 체크
   const [birth, setBirth] = useState('');//생일 입력
   const [areas, setAreas] = useState([]);//지역 리스트
+  const [idChk, setIdk] = useState('') //중복체크 아이디
+  const idRef = useRef();
   const [area, setArea] =useState(0); //지역 번호
   useEffect(() => {
     startList();
@@ -29,6 +31,10 @@ export default function Join() {
    * 회원가입 시 동작 되도록!
    */
   function JoinAction(){
+    if(아이디.trim().length == 0 ||아이디 !== idChk){
+      alert('아이디 중복 체크부터 해주세요');
+      return;
+    }
     //유효성검사
     const obj ={
       'userId': 아이디,
@@ -42,7 +48,10 @@ export default function Join() {
     console.log(obj);
     memberRegist(obj)
     .then(res =>{
+      console.log('성공');
       console.log(res)
+      setIdk(아이디);
+    
     })
     .catch(err =>{
       console.log(err);
@@ -51,7 +60,7 @@ export default function Join() {
   console.log(areas);
   return (
     <div>
-      <input type='text' placeholder='아이디 입력' value={아이디} onChange={
+      <input type='text' placeholder='아이디 입력' ref={idRef} value={아이디} onChange={
         e => 변경아이디(e.target.value)
       } />
       <input type='button' value='중복 체크' onClick={
@@ -64,6 +73,7 @@ export default function Join() {
           check.then(res => {
             console.log('성공');
             console.log(res);
+            idRef.current.disabled = true;
           })
 
           check.catch(err => {
