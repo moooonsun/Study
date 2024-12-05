@@ -1,6 +1,8 @@
 import api from '../ax/axiosSetting'
 
 
-export const itemList = () =>{
-    return api.get('/item/all');
+export const itemList = (param) =>{
+    return api.get('/item/all',{
+        params: param
+    });
 }
