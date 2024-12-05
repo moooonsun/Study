@@ -30,10 +30,10 @@ export default function Login() {
             <h1>로그인</h1>
             <input type='text' placeholder='아이디 입력' value={아이디} onChange={
                 e => 변경아이디(e.target.value)
-            } />
+            } /><br/>
             <input type='text' placeholder='비밀번호 입력' value={비밀번호} onChange={
                 e => 변경비밀번호(e.target.value)
-            } />
+            } /><br/>
             <input type='button' value='로그인' onClick={
                 () => {
                     let obj = new Object();
@@ -46,7 +46,8 @@ export default function Login() {
                     check.then(res => {
                         if(res.data.data === 'Y' && res.data.code == '200'){
                             console.log('성공');
-                            navigate('/mypage');
+                            navigate('/itemList'); //아이템리스트 이동
+                            
                         }else{
                             변경아이디('');
                             변경비밀번호('');
