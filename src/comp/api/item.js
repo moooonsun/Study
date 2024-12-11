@@ -1,4 +1,4 @@
-import api from '../ax/axiosSetting'
+import api from '../ax/axiosSetting';
 
 /**
  * 아이템 리스트
@@ -11,12 +11,7 @@ export const itemList = (param) =>{
 
     });
 }
-export const itemList2 = (obj) =>{
-    return api.get('/item/all',{
-    
-        params:obj
-    });
-}
+
 /**
  * 추천 아이템
  * @param {*} obj 

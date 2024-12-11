@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { itemList } from '../api/item';
-import { itemList2 } from '../api/item';
 import ItemArea from './itemArea'
 import {itemGood} from '../api/item';
 

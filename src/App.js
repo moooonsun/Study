@@ -12,6 +12,8 @@ import ProLogin from './comp/pro/login'
 import MyPage from './comp/pro/mypage'
 import ItemList from './comp/pro/itemList'
 
+import Red from './comp/red/Red01'
+
 import Ax1 from './comp/ax/ax01'
 
 function App() {
@@ -34,7 +36,7 @@ function App() {
           <Route path={"/login"} element={<ProLogin />} />
           <Route path={"/mypage"} element={<MyPage />} />
           <Route path={"/itemList"} element={<ItemList />} />
-          
+          <Route path={"/red01"} element={<Red />} />
         </Routes>
       </BrowserRouter>
     </div>
@@ -69,6 +71,8 @@ function Home() {
       <Link to="/login">로그인 창</Link><br/>
       <Link to="/mypage">마이페이지 창</Link><br/>
       <Link to="/itemList">ItemList 창</Link><br/>
+
+      <Link to="/red01">리듀서 01</Link><br/>
     </div>
   )
 }
